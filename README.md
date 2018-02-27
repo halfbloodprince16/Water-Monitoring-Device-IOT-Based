@@ -1,0 +1,2 @@
+# Water-Monitoring-Device-IOT-Based
+An IOT Based Project on Monitoring the Water based on sudden rise in temperature due to industrial waste exit in to Rivers. It can be implemented on a dummy device and those devices can be put under water as beacons. These devices can be put any where portably. Attaching the  Pyhton code which has to be used in Raspbian and after executing the code it will Sense the Temperature and push it to mlab cloud and then fetching that data on console and publishing it on webpage using python Django framework.
