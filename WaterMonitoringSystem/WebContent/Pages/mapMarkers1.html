@@ -1,0 +1,140 @@
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCigfA8FNrY2iUvJi2majZZXJot-qnBwCA&callback=myMap" 
+          type="text/javascript"></script>
+   <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+	<style>
+		.ui-tabs-anchor {
+		outline: none;
+		}
+	</style>
+</head> 
+<body>
+  <div id="map" style="width: 100%; height: 100%;"></div>
+
+  <script type="text/javascript">
+    var locations = [
+	  ['CTW Dighi Pimpri-Chinchwad, Maharashtra 411039',18.6123331, 73.85091160000002, 3],
+	  ['CME Lake, Upper Lake, Bopkhel, Pimpri-Chinchwad, Maharashtra 411034', 18.606424, 73.847845,  2],
+	  ['Upper Lake, Bopkhel, Pimpri-Chinchwad, Maharashtra', 18.603389, 73.841207, 1]
+	  ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: new google.maps.LatLng(18.60, 73.84),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var infowindow = new google.maps.InfoWindow();
+    var marker, i;
+    for (i = 0; i < locations.length; i++) {  
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+        map: map
+      });
+	
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+		
+			var options1 = {
+					animationEnabled: true,
+					title: {
+						text: "Spline Chart using jQuery Plugin"
+					},
+					axisX: {
+						labelFontSize: 14  
+					},
+					axisY: {
+						labelFontSize: 14
+					},
+					data: [{
+						type: "spline", //change it to line, area, bar, pie, etc
+						dataPoints: [
+							{ y: 15 },
+							{ y: 2 },
+							{ y: 14 },
+							{ y: 10 },
+							{ y: 19 },
+							{ y: 14 },
+							{ y: 22 },
+							{ y: 10 },
+							{ y: 22 }
+						]
+					}]
+				};
+
+				var options2 = {
+					title: {
+						text: "Spline Area Chart using jQuery Plugin"
+					},
+					axisX: {
+						labelFontSize: 14
+					},
+					axisY: {
+						labelFontSize: 14
+					},
+					data: [{
+						type: "splineArea", //change it to line, area, bar, pie, etc
+						dataPoints: [
+							{ y: 15 },
+							{ y: 6 },
+							{ y: 14 },
+							{ y: 10 },
+							{ y: 19 },
+							{ y: 14 },
+							{ y: 22 },
+							{ y: 10 },
+							{ y: 22 }
+						]
+					}]
+				};
+
+				$("#tabs").tabs({
+					create: function (event, ui) {
+						//Render Charts after tabs have been created.
+						$("#chartContainer1").CanvasJSChart(options1);
+						$("#chartContainer2").CanvasJSChart(options2);
+					},
+					activate: function (event, ui) {
+						//Updates the chart to its container size if it has changed.
+						ui.newPanel.children().first().CanvasJSChart().render();
+					}
+				});
+					  
+				infowindow.open(map, marker);
+				}
+		})(marker, i));
+		  
+		 
+
+    }
+	
+	var contentString = '<div id="tabs" style="height: 360px ">'+
+						'<ul>'+
+						'<li ><a href="#tabs-1" style="font-size: 12px">Spline</a></li>'+
+						'<li ><a href="#tabs-2"  style="font-size: 12px">Spline Area</a></li>'+
+						'</ul>'+
+						'<div id="tabs-1" style="height: 300px";width: 100%;>'+
+						'<div id="chartContainer1" style="height: 300px; width: 100%;">'+
+						'</div>'+
+						'</div>'+
+						'<div id="tabs-2" style="height: 300px">'+
+						'<div id="chartContainer2" style="height: 300px; width: 100%;">'+
+						'</div>'+
+						'</div>'+
+						'</div>';
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+	marker.addListener('click', function() {
+    infowindow.open(map, marker);
+	});
+  </script>
+  <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+  <script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
+  <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+</body>
+</html>
